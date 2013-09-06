@@ -1,3 +1,6 @@
+require "asciiart"
+
+
 class FlashcardViewer
 
   QUIT_FLAG = ":-("
@@ -25,14 +28,9 @@ class FlashcardViewer
   end
 
   def welcome
+    a = AsciiArt.new("teamwork.jpg")
+    puts a.to_ascii_art(color: true, width: 100)
     puts <<-START
-     ---------------------------------
-    |                                 |
-    |                                 |
-    |            Welcome!             |
-    |                                 |
-    |                                 |
-     ---------------------------------
 
        At any time, type :-( to exit.
 
