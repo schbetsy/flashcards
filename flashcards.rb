@@ -10,38 +10,58 @@ class FlashcardGameController
 
 
   def initialize(file)
-    @game = Game.new(file)
+    # @game = Game.new(file)
     @view = FlashcardViewer.new
 
   end
 
   def run!
     until game.done?
+      #the game chooses which card should be next (at random)
       card = game.next_card
+      # view displays the question
       display_question(card)
+      # view prompts for a guess and returns the guess string
       guess = get_guess
+      # game determines whether the guess was correct.
       if game.check_guess(guess)
-        #do something when correct
+        #if it was correct, we discard the current card
+        right_answer
+        game.discard!(card)
       else
-        # do something when wrong
+        #if it was wrong, the card remains in the deck, and we continue to another card
+        wrong_answer
+        next
       end
 
     end
+    end_game
   end
 
-  def start_game
-
-  end
 
   def display_question(card)
-
+    view.display(card.question)
   end
 
   def get_guess
+    view.get_guess
+  end
 
+  def end_game
+    view.display("You're done!")
+  end
+
+  def right_answer
+    view.display("Correct! Moving on...")
+  end
+
+  def wrong_answer
+    view.display("Incorrect. You'll see this card again.")
   end
 
 end
 
 
-FlashcardGameController.new(file).run!
+control =  FlashcardGameController.new('flashcards.csv')
+
+
