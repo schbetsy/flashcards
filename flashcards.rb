@@ -18,20 +18,19 @@ class FlashcardGameController
   def run!
     until game.done?
       #the game chooses which card should be next (at random)
-      card = game.next_card
+      question = game.next_question!
       # view displays the question
-      display_question(card)
+      display_question(question)
       # view prompts for a guess and returns the guess string
       guess = get_guess
       # game determines whether the guess was correct.
-      if game.check_guess(guess)
+      if game.guess_correct?(guess)
         #if it was correct, we discard the current card
         right_answer
-        game.discard!(card)
+        game.discard_current!
       else
         #if it was wrong, the card remains in the deck, and we continue to another card
         wrong_answer
-        next
       end
 
     end
@@ -39,8 +38,8 @@ class FlashcardGameController
   end
 
 
-  def display_question(card)
-    view.display(card.question)
+  def display_question(question)
+    view.display(question)
   end
 
   def get_guess

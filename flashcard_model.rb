@@ -14,12 +14,12 @@ end
 require "csv"
 
 class Game
-  attr_reader :current_card
 
   def initialize(file)
     @deck = []
     @discard = []
     @file = file
+    @current_card = nil
   end
 
   def load_cards!
@@ -29,31 +29,22 @@ class Game
     end
   end
 
-  def check_guess(guess)
-    current_card.correct?(guess)
+  def discard_current!
+    discard_current_card
+    remove_card_from_deck(current_card)
   end
 
-  def shuffle_deck!
-    deck.shuffle!
+  def next_question!
+    draw_new_card.question
+  end
+
+  def guess_correct?(guess)
+    current_card.correct?(guess)
   end
 
   def reset_deck
     @deck = discard
     @discard = []
-  end
-
-  def entire_deck
-    deck
-  end
-
-  def next_card
-    discard_current_card
-    draw_new_card
-  end
-
-  def previous_card
-    reverse_draw_new_card
-    reverse_discard_current_card
   end
 
   def remaining_cards
@@ -70,7 +61,7 @@ class Game
 
   private
 
-  attr_reader :deck, :discard, :file
+  attr_reader :deck, :discard, :file, :current_card
 
   def add_card(card)
     @deck << card
@@ -80,16 +71,13 @@ class Game
     discard << current_card
   end
 
+  def remove_card_from_deck(this_card)
+    @deck.delete(this_card)
+  end
+
   def draw_new_card
-    @current_card = deck.pop
+    @current_card = deck.sample
   end
 
-  def reverse_discard_current_card
-    @current_card = discard.pop
-  end
-
-  def reverse_draw_new_card
-    deck << current_card
-  end
 
 end
