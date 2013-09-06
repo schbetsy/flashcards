@@ -1,13 +1,18 @@
 class Flashcard
-  attr_reader :question, :answer
+  attr_reader :question, :answer, :incorrect_guesses
 
   def initialize(params)
     @question = params[:question]
     @answer = params[:answer]
+    @incorrect_guesses = []
   end
 
   def correct?(guess)
     guess.downcase == answer.downcase
+  end
+
+  def add_incorrect_guess(guess)
+    incorrect_guesses << guess 
   end
 end
 
@@ -41,6 +46,14 @@ class Game
 
   def guess_correct?(guess)
     current_card.correct?(guess)
+  end
+
+  def add_incorrect_guess(guess)
+    current_card.add_incorrect_guess(guess)
+  end
+
+  def previous_guesses
+    current_card.incorrect_guesses
   end
 
   def reset_deck

@@ -3,16 +3,25 @@ class FlashcardViewer
   QUIT_FLAG = ":-("
 
   def get_guess
-    print "Please enter your answer > "
-    gets.chomp
+    input = ""
+    loop do
+      print "Please enter your answer > "
+      input = gets.chomp
+      break unless input == ""
+      display_help
+    end
+    input
   end
 
   def display(message)
     puts "\n#{message}\n\n"
   end
 
-  def print_question(question)
+  def print_question(question, prev_guesses)
     puts wrap(question) + "\n"
+    unless prev_guesses.empty?
+      puts "Your previous guesses: #{prev_guesses.join(", ")}\n\n"
+    end
   end
 
   def welcome
@@ -50,6 +59,10 @@ class FlashcardViewer
   def enter_to_continue
     puts "\nPress <enter> to continue..."
     gets
+  end
+
+  def display_help
+    puts "Remember, you can always enter :-( to exit"
   end
 
   def quit?(flag)
