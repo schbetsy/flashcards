@@ -20,6 +20,7 @@ class Game
     @discard = []
     @file = file
     @current_card = nil
+    load_cards!
   end
 
   def load_cards!

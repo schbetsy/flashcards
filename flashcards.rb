@@ -10,7 +10,7 @@ class FlashcardGameController
 
 
   def initialize(file)
-    # @game = Game.new(file)
+    @game = Game.new(file)
     @view = FlashcardViewer.new
 
   end
@@ -60,7 +60,6 @@ class FlashcardGameController
 
 end
 
-
-control =  FlashcardGameController.new('flashcards.csv')
+FlashcardGameController.new('flashcard_samples.csv').run!
 
 
