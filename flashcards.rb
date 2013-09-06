@@ -1,39 +1,9 @@
-class Flashcard
-  attr_reader :question, :answer
+$LOAD_PATH << './'
 
-  def correct?(guess)
-
-  end
-end
+require 'flashcard_viewer.rb'
+require 'flashcard_model.rb'
 
 
-class Game
-  attr_reader :deck, :current_card, :discard
-
-  def initialize(file)
-    @deck = []
-    @discard = []
-    load_cards!(file)
-  end
-
-  def load_cards!(file)
-
-  end
-
-  def check_guess(guess)
-
-  end
-
-  def next_card
-    #This will need to handle multiple situations:
-    # decide whether to put current_card in discard or leave in deck
-  end
-
-  def done?
-
-  end
-
-end
 
 class FlashcardGameController
   attr_reader :game, :view
@@ -64,20 +34,11 @@ class FlashcardGameController
   end
 
   def display_question(card)
-    
+
   end
 
   def get_guess
 
-  end
-
-end
-
-class FlashcardViewer
-
-  def get_guess
-    puts "please enter your answer > "
-    gets.chomp
   end
 
 end
